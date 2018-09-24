@@ -1,0 +1,51 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3>
+        <ion-col col-1 col-sm class="rotate" align-selv-left> TEXTO 1</ion-col>
+        <ion-col col-1 col-sm class="rotate" align-selv-center> TEXTO 2</ion-col>
+        <ion-col col-1 col-sm *ngFor="let d of dilatacao" align-self-end>
+          <div style="margin:6px;" flex>
+            <ion-row justify-content-end>{{d}}</ion-row>
+          </div>
+        </ion-col>
+      </ion-col>
+      <ion-col col-16>
+        <table class="table">
+          <tr *ngFor="let item of linhas">
+            <th>{{item.coluna01}}</th>
+            <th>{{item.coluna02}}</th>
+            <th>{{item.coluna03}}</th>
+            <th>{{item.coluna04}}</th>
+            <th>{{item.coluna05}}</th>
+            <th>{{item.coluna06}}</th>
+            <th>{{item.coluna07}}</th>
+            <th>{{item.coluna08}}</th>
+            <th>{{item.coluna09}}</th>
+            <th>{{item.coluna10}}</th>
+            <th>{{item.coluna11}}</th>
+            <th>{{item.coluna12}}</th>
+            <th>{{item.coluna13}}</th>
+            <th>{{item.coluna14}}</th>
+            <th>{{item.coluna15}}</th>
+            <th>{{item.coluna16}}</th>
+          </tr>
+        </table>
+      </ion-col>
+      <ion-col col-1>
+        <ion-col col-1 col-sm *ngFor="let cm of centimetros">
+          <div style="margin:5px;" flex>
+            <ion-row justify-content-start>{{cm}}</ion-row>
+          </div>
+        </ion-col>
+      </ion-col>
+      <ion-col col-1>
+        <ion-col col-1 col-sm *ngFor="let d of dedos">
+          <div style="margin:5px;" flex>
+            <ion-row justify-content-end>{{d}}</ion-row>
+          </div>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

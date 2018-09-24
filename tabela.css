@@ -1,0 +1,29 @@
+tabela-list {
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 15px;
+        text-align: center;
+        border-spacing: 5px;       
+    }
+    .table{
+        width: 100%
+    }
+    ion-grid{
+        border: 2px solid black;
+        border-collapse: collapse;
+    }
+    .rotate{
+        /* Safari */
+        -webkit-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
+        float: left;
+        height: 100%;
+        
+    }
+}

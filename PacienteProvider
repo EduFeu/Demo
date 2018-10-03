@@ -1,0 +1,113 @@
+import { Injectable } from '@angular/core';
+import { SQLiteObject } from '@ionic-native/sqlite';
+import { DatabaseProvider } from '../database/database';
+
+export class Paciente {
+  id: number;
+  nome: string;  
+  data_nasc: Date;
+  telefone: string;
+  status: boolean;
+}
+
+
+@Injectable()
+export class PacienteProvider {
+
+  constructor(private dbProvider: DatabaseProvider) { }
+  
+  public insert(paciente: Paciente) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'insert into TB_PACIENTE (NOME, DATA_NASC, TELEFONE, STATUS) values (?, ?, ?, ?)';
+        let data = [paciente.nome, paciente.data_nasc, paciente.telefone, paciente.status ? 1 : 0];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public update(paciente: Paciente) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'update TB_PACIENTE set NOME = ?, DATA_NASC = ?, TELEFONE = ?, STATUS = ? where id = ?';
+        let data = [paciente.nome, paciente.data_nasc, paciente.telefone, paciente.status ? 1 : 0];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public remove(id: number) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'delete from TB_PACIENTE where id = ?';
+        let data = [id];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public get(id: number) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'select * from TB_PACIENTE where id = ?';
+        let data = [id];
+
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              let item = data.rows.item(0);
+              let paciente = new Paciente();
+              paciente.id = item.ID;
+              paciente.nome = item.NOME;
+              paciente.data_nasc = item.DATA_NASC;
+              paciente.telefone = item.TELEFONE;
+              paciente.status = item.STATUS;             
+
+              return paciente;
+            }
+
+            return null;
+          })
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public getAll(active: boolean, name: string = null) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'SELECT* FROM TB_PACIENTE WHERE STATUS = ?';
+        var data: any[] = [active ? 1 : 0];
+
+        // filtrando pelo nome
+        if (name) {
+          sql += ' and p.nome like ?'
+          data.push('%' + name + '%');
+        }
+
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              let pacientes: any[] = [];
+              for (var i = 0; i < data.rows.length; i++) {
+                var paciente = data.rows.item(i);
+                pacientes.push(paciente);
+              }
+              return pacientes;
+            } else {
+              return [];
+            }
+          })
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+}
+
+
